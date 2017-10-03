@@ -33,6 +33,7 @@ export function booksReducers(state={
         // let books = state.books.concat(action.payload); //Concatinate two dispatch into one to maintian one state.(otherwise state will overwrite with the last dispatch data)
         //return state = action.payload;
         // return {books}; //{books} this is an array object, it should cover with curly brakets.
+        console.log("...action.payload ", ...action.payload);
         return {books:[...state.books, ...action.payload]} // This is a spread operator [spread (...)] this will only work if you installed stage-1 pack in your app.
         break;
         // case "DECREMENT":

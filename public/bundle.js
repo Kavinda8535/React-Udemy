@@ -2078,7 +2078,7 @@ var store = (0, _redux.createStore)(_index2.default, middleware);
 //     payload: [{id: 1}]
 // })
 
-store.dispatch((0, _cartActions.addToCart)([{ id: 1 }]));
+// store.dispatch(addToCart([{id: 1}]))
 
 /***/ }),
 /* 31 */
@@ -23588,6 +23588,8 @@ exports.booksReducers = booksReducers;
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function booksReducers() {
+    var _console;
+
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
         books: [{
             id: 1,
@@ -23619,6 +23621,7 @@ function booksReducers() {
             // let books = state.books.concat(action.payload); //Concatinate two dispatch into one to maintian one state.(otherwise state will overwrite with the last dispatch data)
             //return state = action.payload;
             // return {books}; //{books} this is an array object, it should cover with curly brakets.
+            (_console = console).log.apply(_console, ["...action.payload "].concat(_toConsumableArray(action.payload)));
             return { books: [].concat(_toConsumableArray(state.books), _toConsumableArray(action.payload)) // This is a spread operator [spread (...)] this will only work if you installed stage-1 pack in your app.
             };break;
         // case "DECREMENT":
@@ -63621,6 +63624,14 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactBootstrap = __webpack_require__(201);
 
+var _reactRedux = __webpack_require__(20);
+
+var _redux = __webpack_require__(7);
+
+var _reactDom = __webpack_require__(33);
+
+var _booksActions = __webpack_require__(29);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -63639,6 +63650,16 @@ var BooksForm = function (_React$Component) {
     }
 
     _createClass(BooksForm, [{
+        key: 'handleSubmit',
+        value: function handleSubmit() {
+            var book = [{
+                title: (0, _reactDom.findDOMNode)(this.refs.title).value,
+                description: (0, _reactDom.findDOMNode)(this.refs.description).value,
+                price: (0, _reactDom.findDOMNode)(this.refs.price).value
+            }];
+            this.props.postBooks(book);
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -63662,7 +63683,7 @@ var BooksForm = function (_React$Component) {
                     ),
                     _react2.default.createElement(
                         _reactBootstrap.FormGroup,
-                        { controlId: 'decription' },
+                        { controlId: 'description' },
                         _react2.default.createElement(
                             _reactBootstrap.ControlLabel,
                             null,
@@ -63688,7 +63709,7 @@ var BooksForm = function (_React$Component) {
                     ),
                     _react2.default.createElement(
                         _reactBootstrap.Button,
-                        { bsStyle: 'primary' },
+                        { onClick: this.handleSubmit.bind(this), bsStyle: 'primary' },
                         ' Save Book '
                     )
                 )
@@ -63699,7 +63720,10 @@ var BooksForm = function (_React$Component) {
     return BooksForm;
 }(_react2.default.Component);
 
-exports.default = BooksForm;
+function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)({ postBooks: _booksActions.postBooks }, dispatch);
+}
+exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(BooksForm);
 
 /***/ })
 /******/ ]);

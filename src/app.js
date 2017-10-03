@@ -73,4 +73,4 @@ render(
 //     payload: [{id: 1}]
 // })
 
-store.dispatch(addToCart([{id: 1}]))
+// store.dispatch(addToCart([{id: 1}]))
