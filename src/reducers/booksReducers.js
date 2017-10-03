@@ -1,8 +1,34 @@
 "use strict"
 
 //Books Reducers
-export function booksReducers(state={books:[]}, action){ //state={} => this is representing an object, state=[] => array of obejcts
+export function booksReducers(state={
+    books:[{
+        id: 1,
+        title: 'this is the book title',
+        description: 'this is the book description',
+        price: 33.22
+    },
+    {
+        id: 2,
+        title: 'this is the second book title',
+        description: 'this is the second book description',
+        price: 21.42
+    },
+    {
+        id: 3,
+        title: 'this is the third book title',
+        description: 'this is the third book description',
+        price: 52.32
+    }
+]
+}, action){ //state={} => this is representing an object, state=[] => array of obejcts
+    
     switch(action.type){
+
+        case "GET_BOOKS":
+        return {...state, books:[...state.books]} // This is a spread operator [spread (...)] this will only work if you installed stage-1 pack in your app.
+        break;
+
         case "POST_BOOK":
         // let books = state.books.concat(action.payload); //Concatinate two dispatch into one to maintian one state.(otherwise state will overwrite with the last dispatch data)
         //return state = action.payload;
