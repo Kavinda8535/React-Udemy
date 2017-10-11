@@ -3,19 +3,19 @@
 //Books Reducers
 export function booksReducers(state={
     books:[{
-        id: 1,
+        _id: 1,
         title: 'this is the book title',
         description: 'this is the book description',
         price: 33.22
     },
     {
-        id: 2,
+        _id: 2,
         title: 'this is the second book title',
         description: 'this is the second book description',
         price: 21.42
     },
     {
-        id: 3,
+        _id: 3,
         title: 'this is the third book title',
         description: 'this is the third book description',
         price: 52.32
@@ -50,7 +50,7 @@ export function booksReducers(state={
                 // console.log("book --", book);
                 // console.log("book.id --", book.id);
                 // console.log("action.payload.id--", action.payload.id);
-                return book.id === action.payload.id;
+                return book._id === action.payload._id;
             }
         )
 
@@ -68,7 +68,7 @@ export function booksReducers(state={
         // Determind at which index in books array is the book to be deleted
         const indexToUpdate = currentBookToUpdate.findIndex(
             function(book){
-                return book.id === action.payload.id;
+                return book._id === action.payload._id;
             }
         )
 

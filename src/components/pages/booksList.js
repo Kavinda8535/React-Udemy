@@ -9,6 +9,7 @@ import {Grid, Col, Row, Button} from 'react-bootstrap';
 // Adding Components to BooksList Component
 import BookItem from './bookItem';
 import BooksForm from './booksForm';
+import Cart from './cart';
 
 class BooksList extends React.Component
 {
@@ -28,9 +29,9 @@ class BooksList extends React.Component
                 //     <h2> {booksArr.price} </h2>
                 //     <Button bsStyle="primary">Buy now</Button>
                 // </div>
-                <Col xs={12} sm={6} md={4} key={booksArr.id}>
+                <Col xs={12} sm={6} md={4} key={booksArr._id}>
                     <BookItem 
-                        id={booksArr.id}
+                        _id={booksArr._id}
                         title={booksArr.title}
                         description={booksArr.description}
                         price={booksArr.price}
@@ -42,13 +43,18 @@ class BooksList extends React.Component
         <div>
             {/* <h1>Hello React</h1> */}
             <Grid>
-                <Col xs={12} sm={6}>
-                <BooksForm/>
-                </Col>
+                <Row>
+                    <Cart />
+                </Row>
+                <Row>
+                    <Col xs={12} sm={6}>
+                        <BooksForm/>
+                    </Col>
 
-                {/* <Row style={{marginTop:'15px'}}> */}
-                {booksList}
-                {/* </Row> */}
+                    {/* <Row style={{marginTop:'15px'}}> */}
+                    {booksList}
+                    {/* </Row> */}
+                </Row>
             </Grid>
 
             
