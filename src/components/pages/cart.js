@@ -4,7 +4,21 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Panel, Col, Row, Well, Button, ButtonGroup, Label} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
-import {deleteCartItem} from '../../actions/cartActions';
+import {deleteCartItem, updateCart} from '../../actions/cartActions';
+import Modal from 'react-modal';
+
+// This is for Modal styling...
+const customStyles = {
+    content : {
+      top                   : '50%',
+      left                  : '50%',
+      right                 : 'auto',
+      bottom                : 'auto',
+      marginRight           : '-50%',
+      transform             : 'translate(-50%, -50%)',
+      color                 : '#2F4F4F'
+    }
+  };
  
 class Cart extends React.Component
 {
@@ -25,6 +39,58 @@ class Cart extends React.Component
             ...currentCartItemToDelete.slice(indexToDelete+1)]
 
         this.props.deleteCartItem(cartAfterDelete);
+    }
+
+    onIncrement(_id)
+    {
+        this.props.updateCart(_id, 1);
+    }
+
+    onDecrement(_id, quantity)
+    {
+        if(quantity > 1)
+        {
+            this.props.updateCart(_id, -1);
+        }
+        
+    }
+
+    constructor()
+    {
+        //console.log("constructor");
+        super();
+        this.state = {
+            modalIsOpen: false
+        }
+        // console.log("showModal", showModal);
+
+        this.openModal = this.openModal.bind(this);
+        this.afterOpenModal = this.afterOpenModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+    }
+
+    
+
+    openModal()
+    {
+        // console.log("open method");
+        this.setState({ modalIsOpen: true });
+        // console.log("open method after", showModal);
+    }
+
+    afterOpenModal()
+    {
+        // references are now sync'd and can be accessed.
+        this.subtitle.style.color = '#696969';
+        this.topcorner.style.position = "absolute";
+        this.topcorner.style.right = "10px";
+        this.topcorner.style.top = "10px";
+
+    }
+
+    closeModal()
+    {
+        this.setState({ modalIsOpen: false });
     }
 
     render()
@@ -55,12 +121,12 @@ class Cart extends React.Component
                             <h6>USD {cartArr.price}</h6>
                         </Col>
                         <Col xs={12} sm={2}>
-                            <h6>QTY <Label bsStyle="success"></Label></h6>
+                            <h6>QTY <Label bsStyle="success">{cartArr.quantity}</Label></h6>
                         </Col>
                         <Col xs={6} sm={4}>
                             <ButtonGroup style={{minWidth:'300px'}}>
-                                <Button bsStyle="default" bsSize="small"> - </Button>
-                                <Button bsStyle="default" bsSize="small"> + </Button>
+                                <Button onClick={this.onDecrement.bind(this, cartArr._id, cartArr.quantity)} bsStyle="default" bsSize="small"> - </Button>
+                                <Button onClick={this.onIncrement.bind(this, cartArr._id)} bsStyle="default" bsSize="small"> + </Button>
                                 {/* this is how we make spaces below span*/}
                                 <span>     </span> 
                                 <Button onClick={this.onDelete.bind(this, cartArr._id)} bsStyle="danger" bsSize="small"> DELETE </Button>
@@ -73,6 +139,61 @@ class Cart extends React.Component
             return(
                 <Panel header="Cart" bsStyle="primary">
                     {cartItemList}
+                    <Row>
+                        <Col xs={12}>
+                            <h6>Total amount: {this.props.totalAmount}</h6>
+                            <Button onClick={this.openModal} bsStyle="success" bsSize="small">
+                                PROCEED TO CHECKOUT
+                            </Button>
+                        </Col>
+                    </Row>
+
+                    {/**
+                     * This is Modal code for messages
+                     */}
+                    <div>
+                        {/* <button onClick={this.openModal}>Open Modal</button> */}
+                        <Modal
+                        isOpen={this.state.modalIsOpen}
+                        onAfterOpen={this.afterOpenModal}
+                        onRequestClose={this.closeModal}
+                        style={customStyles}
+                        contentLabel="Minimal"
+
+                        style={{
+                                overlay: {
+                                    backgroundColor: 'grey'
+                                },
+                                content: {
+                                    color: '#2F4F4F'
+                                }
+                                }}
+                        >
+                
+                        <h2 ref={subtitle => this.subtitle = subtitle}>Thank you !</h2>
+                        <div>   
+                            <h6>Your order has been saved.</h6>
+                            <p> You will receive an email confirmation </p>
+
+                        </div>
+                        <form>
+                            {/* <input /> */}
+                            {/* <button>tab navigation</button>
+                            <button>stays</button>
+                            <button>inside</button>
+                            <button>the modal</button> */}
+                            <h6>total $: {this.props.totalAmount} </h6>
+                            <button ref={topcorner => this.topcorner = topcorner} onClick={this.closeModal}>close</button>
+                        </form>
+                        </Modal>
+                    </div>
+                    {/**
+                     * End of Modal code for messages
+                     */}
+
+
+                    
+                    
                 </Panel>
             )
         
@@ -82,14 +203,16 @@ class Cart extends React.Component
 function mapStateToProps(state)
 {
     return{
-        cart: state.cart.cart
+        cart: state.cart.cart,
+        totalAmount: state.cart.totalAmount
     }
 }
 
 function mapDispatchToProps(dispatch)
 {
     return bindActionCreators({
-        deleteCartItem: deleteCartItem},dispatch
-    )
+        deleteCartItem: deleteCartItem,
+        updateCart:updateCart
+    },dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
