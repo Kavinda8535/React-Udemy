@@ -16,6 +16,8 @@ import {addToCart} from './actions/cartActions';
 import {postBooks,deleteBooks,updateeBooks} from './actions/booksActions'
 
 import BooksList from './components/pages/booksList';
+import Menu from './components/menu';
+import Footer from './components/footer';
 
 //Step 1 create the store
 const middleware = applyMiddleware(logger);
@@ -33,7 +35,11 @@ const store = createStore(reducers, middleware);
 
 render(
     <Provider store={store}>
-        <BooksList />
+        <div>
+            <Menu/>
+            <BooksList />
+            <Footer />
+        </div>
     </Provider> , document.getElementById('app')
 );
 
