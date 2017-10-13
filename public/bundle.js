@@ -3603,7 +3603,7 @@ function postBooks(book) {
 function deleteBooks(_id) {
     return {
         type: "DELETE_BOOK",
-        payload: id
+        payload: _id
     };
 }
 // UPDATE A BOOK
@@ -31383,7 +31383,7 @@ function booksReducers() {
                 // console.log("book --", book);
                 // console.log("book.id --", book.id);
                 // console.log("action.payload.id--", action.payload.id);
-                return book._id === action.payload._id;
+                return book._id == action.payload; //=== means exact match like eg: 2 === 2 correct. but 2 === "2" is wrong. get ride of his can use == . This will identify 2 == "2" correct.
             });
 
             // console.log("indexToDelete --", indexToDelete);
@@ -42846,8 +42846,24 @@ var BooksForm = function (_React$Component) {
             this.props.postBooks(book);
         }
     }, {
+        key: 'onDelete',
+        value: function onDelete() {
+            var bookId = (0, _reactDom.findDOMNode)(this.refs.delete).value;
+
+            this.props.deleteBooks(bookId);
+        }
+    }, {
         key: 'render',
         value: function render() {
+
+            var booksList = this.props.books.map(function (booksArr) {
+                return _react2.default.createElement(
+                    'option',
+                    { key: booksArr._id },
+                    booksArr._id
+                );
+            });
+
             return _react2.default.createElement(
                 _reactBootstrap.Well,
                 null,
@@ -42898,6 +42914,34 @@ var BooksForm = function (_React$Component) {
                         { onClick: this.handleSubmit.bind(this), bsStyle: 'primary' },
                         ' Save Book '
                     )
+                ),
+                _react2.default.createElement(
+                    _reactBootstrap.Panel,
+                    { style: { marginTop: '25px' } },
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        { controlId: 'formControlsSelect' },
+                        _react2.default.createElement(
+                            _reactBootstrap.ControlLabel,
+                            null,
+                            'Select a book id to delete'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.FormControl,
+                            { ref: 'delete', componentClass: 'select', placeholder: 'select' },
+                            _react2.default.createElement(
+                                'option',
+                                { value: 'select' },
+                                'select'
+                            ),
+                            booksList
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Button,
+                        { onClick: this.onDelete.bind(this), bsStyle: 'danger' },
+                        'Delete Book'
+                    )
                 )
             );
         }
@@ -42906,10 +42950,19 @@ var BooksForm = function (_React$Component) {
     return BooksForm;
 }(_react2.default.Component);
 
-function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)({ postBooks: _booksActions.postBooks }, dispatch);
+function mapStateToProps(state) {
+    return {
+        books: state.books.books
+    };
 }
-exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(BooksForm);
+
+function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)({
+        postBooks: _booksActions.postBooks,
+        deleteBooks: _booksActions.deleteBooks
+    }, dispatch);
+}
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(BooksForm);
 
 /***/ }),
 /* 335 */

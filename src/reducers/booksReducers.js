@@ -50,7 +50,7 @@ export function booksReducers(state={
                 // console.log("book --", book);
                 // console.log("book.id --", book.id);
                 // console.log("action.payload.id--", action.payload.id);
-                return book._id === action.payload._id;
+                return book._id == action.payload; //=== means exact match like eg: 2 === 2 correct. but 2 === "2" is wrong. get ride of his can use == . This will identify 2 == "2" correct.
             }
         )
 
