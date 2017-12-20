@@ -3,6 +3,7 @@ Full stack Universal React with Redux, Node js and MongoDB by Marco Tomasello IT
 
 # Run the project
 Go to the project in your command prompt and then run "webpack". In another command propmpt window run "node server.js" like below.
+
 PS E:\My Work\React + Redux\udemyCourse> cd .\reduxApp\
 PS E:\My Work\React + Redux\udemyCourse\reduxApp> webpack
 Webpack is watching the files…
