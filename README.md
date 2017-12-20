@@ -6,10 +6,12 @@ Go to the project in your command prompt and then run "webpack". In another comm
 
 PS E:\My Work\React + Redux\udemyCourse> cd .\reduxApp\
 PS E:\My Work\React + Redux\udemyCourse\reduxApp> webpack
+
 Webpack is watching the files…
 
 PS E:\My Work\React + Redux\udemyCourse> cd .\reduxApp\
 PS E:\My Work\React + Redux\udemyCourse\reduxApp> node .\server.js
+
 app is listening on port 3000
 
 # There is react bootstrap modal issue that was not yet resolve. So I choose a different modal. Link is below.
