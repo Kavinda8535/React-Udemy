@@ -35,8 +35,7 @@ class Cart extends React.Component
                 )
 
         // use slice to remove the book at the specified index
-        let cartAfterDelete = [...currentCartItemToDelete.slice(0, indexToDelete),
-            ...currentCartItemToDelete.slice(indexToDelete+1)]
+        let cartAfterDelete = [...currentCartItemToDelete.slice(0, indexToDelete),...currentCartItemToDelete.slice(indexToDelete+1)];
 
         this.props.deleteCartItem(cartAfterDelete);
     }
@@ -61,7 +60,7 @@ class Cart extends React.Component
         super();
         this.state = {
             modalIsOpen: false
-        }
+        };
         // console.log("showModal", showModal);
 
         this.openModal = this.openModal.bind(this);

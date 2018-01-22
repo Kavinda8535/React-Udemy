@@ -7,7 +7,7 @@ module.exports = {
         filename:'bundle.js',
         path: path.resolve(__dirname, 'public')
     },
-    watch: true,
+    watch: true, // when we set this into true web pack will bundle it automatically.
     module:{
         loaders: [{
                 test:/\.js$/,
