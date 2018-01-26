@@ -161,15 +161,29 @@ class Cart extends React.Component
 
                         style={{
                                 overlay: {
-                                    backgroundColor: 'grey'
+                                    backgroundColor   : 'grey',
+                                    position          : 'fixed',
                                 },
                                 content: {
-                                    color: '#2F4F4F'
+                                    color                      : '#2F4F4F',
+                                    position                   : 'absolute',
+                                    top                        : '40px',
+                                    left                       : '40px',
+                                    right                      : '40px',
+                                    bottom                     : '40px',
+                                    border                     : '6px solid #ccc',
+                                    overflow                   : 'auto',
+                                    WebkitOverflowScrolling    : 'touch',
+                                    borderRadius               : '4px',
+                                    outline                    : 'none',
+                                    padding                    : '20px',
+
                                 }
                                 }}
                         >
-                
+
                         <h2 ref={subtitle => this.subtitle = subtitle}>Thank you !</h2>
+
                         <div>   
                             <h6>Your order has been saved.</h6>
                             <p> You will receive an email confirmation </p>
@@ -183,6 +197,9 @@ class Cart extends React.Component
                             <button>the modal</button> */}
                             <h6>total $: {this.props.totalAmount} </h6>
                             <button ref={topcorner => this.topcorner = topcorner} onClick={this.closeModal}>close</button>
+                            <div id="div1">linear</div>
+                            <div id="div2">ease</div>
+                            <div id="div3">ease-in</div>
                         </form>
                         </Modal>
                     </div>

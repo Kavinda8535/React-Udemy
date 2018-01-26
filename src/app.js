@@ -5,6 +5,9 @@ import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 
+//React-Router
+import {Route, Router, IndexRoute, browserHistory, hashHistory } from 'react-router';
+
 import {applyMiddleware, createStore} from 'redux';
 import logger from 'redux-logger'; //Logger must be last middleware in chain, otherwise it will log thunk and promise, not actual actions 
 
@@ -16,8 +19,11 @@ import {addToCart} from './actions/cartActions';
 import {postBooks,deleteBooks,updateeBooks} from './actions/booksActions'
 
 import BooksList from './components/pages/booksList';
-import Menu from './components/menu';
-import Footer from './components/footer';
+// import Menu from './components/menu';
+// import Footer from './components/footer';
+import Cart from './components/pages/cart';
+import BooksForm from './components/pages/booksForm';
+import Main from './main';
 
 //Step 1 create the store
 const middleware = applyMiddleware(logger);
@@ -33,14 +39,28 @@ const store = createStore(reducers, middleware);
 // store.dispatch({type:"INCREMENT", payload: 1})
 // store.dispatch({type:"DECREMENT", payload: 1})
 
-render(
+const Routes = (
     <Provider store={store}>
-        <div>
-            <Menu/>
-            <BooksList />
-            <Footer />
-        </div>
-    </Provider> , document.getElementById('app')
+        <Router history={browserHistory}>
+            <Route path="/" component={Main}>
+                <IndexRoute component={BooksList} />
+                <Route path="/admin" component={BooksForm} />
+                <Route path="/cart" component={Cart} />
+            </Route>
+        </Router>
+    </Provider>
+);
+
+render(
+    /*<Provider store={store}>*/
+        /*<div>*/
+            /*/!*<Menu/>*!/*/
+            /*<BooksList />*/
+            /*/!*<Footer />*!/*/
+        /*</div>*/
+    /*</Provider> , document.getElementById('app')*/
+
+    Routes, document.getElementById('app')
 );
 
 // store.dispatch(postBooks(
